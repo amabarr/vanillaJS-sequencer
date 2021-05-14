@@ -26,6 +26,7 @@ const playButtonClicked = (e) => {
 playButton.addEventListener("click", playButtonClicked);
 
 //audio
+
 let context = null;
 let sound = null;
 
@@ -49,3 +50,12 @@ const noteOn = (e) => {
 	note.currentTime = 0;
 	note.play();
 };
+
+// clear button
+const clearAll = () => {
+	keys.forEach((key) => key.classList.remove("selected"));
+};
+
+const clearButton = document.getElementById("clear");
+
+clearButton.addEventListener("click", clearAll);
