@@ -1,0 +1,42 @@
+body,
+html {
+	margin: 10px;
+	padding: 10px;
+	font-family: sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.keys {
+	display: flex;
+	width: 70vw;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 200px;
+	height: 70vh;
+}
+
+.key {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: space-around;
+	width: 75%;
+	margin: 2.5px;
+	height: 3em;
+	border: 5px black solid;
+}
+
+.selected {
+	background-color: red;
+}
+
+#play {
+	width: 100px;
+	height: 50px;
+}
