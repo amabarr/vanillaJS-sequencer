@@ -2,7 +2,7 @@
 const keySelector = (e) => {
 	e.target.classList.toggle("selected");
 	if (e.target.classList.contains("selected")) {
-		noteOn(e);
+		noteOn(e.target.innerText);
 	}
 };
 
@@ -13,11 +13,30 @@ keys.forEach((key) => key.addEventListener("click", keySelector));
 // play button
 const playButton = document.getElementById("play");
 
+const playAll = () => {
+	if (!playButton.classList.contains("on")) {
+		return;
+	}
+
+	const sounds = Array.from(document.querySelectorAll(".selected"));
+
+	for (let i = 0; i < sounds.length; i++) {
+		setTimeout(() => {
+			noteOn(sounds[i].innerText);
+		}, i * 500);
+	}
+
+	setTimeout(() => {
+		playAll();
+	}, sounds.length * 500);
+};
+
 const playButtonClicked = (e) => {
 	playButton.classList.toggle("on");
 
 	if (playButton.classList.contains("on")) {
 		playButton.innerText = "Stop";
+		playAll();
 	} else {
 		playButton.innerText = "Play";
 	}
@@ -40,15 +59,13 @@ const getOrCreateContext = () => {
 
 let isStarted = false;
 
-const noteOn = (e) => {
-	const note = document.querySelector(
-		`audio[data-key="${e.target.innerText}"]`
-	);
+const noteOn = (note) => {
+	const sound = document.querySelector(`audio[data-key="${note}"]`);
 
-	if (!note) return;
+	if (!sound) return;
 
-	note.currentTime = 0;
-	note.play();
+	sound.currentTime = 0;
+	sound.play();
 };
 
 // clear button
