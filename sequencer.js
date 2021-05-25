@@ -48,7 +48,7 @@ class Sequencer {
 		this.elem.playButton.classList.toggle("on");
 		this.stop = !this.stop;
 
-		if (this.elem.playButton.classList.contains("on")) {
+		if (!this.stop) {
 			this.elem.playButton.innerText = "Stop";
 			this.playAll(this.timeInput);
 		} else {
@@ -90,6 +90,8 @@ class Sequencer {
 	}
 
 	clearAll() {
+		this.stop = true;
+		this.elem.playButton.innerText = "Play";
 		this.elem.keys.forEach((key) => key.classList.remove("selected"));
 	}
 
