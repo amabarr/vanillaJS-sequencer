@@ -11,6 +11,7 @@ html {
 .keys {
 	display: flex;
 	width: 70vw;
+	justify-content: space-around;
 }
 
 .col {
@@ -36,7 +37,7 @@ html {
 	background-color: red;
 }
 
-#play {
-	width: 100px;
-	height: 50px;
+button {
+	width: 10rem;
+	height: 5rem;
 }

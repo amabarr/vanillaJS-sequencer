@@ -46,31 +46,38 @@ class Sequencer {
 
 	playButtonClicked() {
 		this.elem.playButton.classList.toggle("on");
+		this.stop = !this.stop;
 
 		if (this.elem.playButton.classList.contains("on")) {
 			this.elem.playButton.innerText = "Stop";
-			this.playAll();
+			this.playAll(this.timeInput);
 		} else {
 			this.elem.playButton.innerText = "Play";
 		}
 	}
 
-	playAll() {
-		if (!this.elem.playButton.classList.contains("on")) {
+	playAll(time) {
+		if (this.stop) {
 			return;
 		}
 
-		const sounds = Array.from(document.querySelectorAll(".selected"));
+		const sounds = this.getSequence();
 
 		for (let i = 0; i < sounds.length; i++) {
 			setTimeout(() => {
-				this.noteOn(sounds[i].innerText);
-			}, i * 500);
+				this.playPoly(sounds[i]);
+			}, (i * this.timeInput) / 6);
 		}
 
 		setTimeout(() => {
-			this.playAll();
-		}, sounds.length * 500);
+			this.playAll(this.timeInput);
+		}, time);
+	}
+
+	playPoly(notes) {
+		for (let i = 0; i < notes.length; i++) {
+			this.noteOn(notes[i]);
+		}
 	}
 
 	noteOn(note) {
@@ -84,6 +91,27 @@ class Sequencer {
 
 	clearAll() {
 		this.elem.keys.forEach((key) => key.classList.remove("selected"));
+	}
+
+	getSequence() {
+		const sounds = new Array(6).fill(null).map((val) => []);
+		const keys = this.elem.keys;
+
+		for (let i = 0; i < sounds.length; i++) {
+			let col = sounds[i];
+			let j = i * 6;
+			let count = 0;
+			while (count <= 5) {
+				if (keys[j].classList.contains("selected")) {
+					col.push(keys[j].innerText);
+				}
+
+				j++;
+				count++;
+			}
+		}
+
+		return sounds;
 	}
 }
 
